@@ -1,162 +1,464 @@
-# TaskManagement Backend (Spring Boot)
 
-Backend service for a task management system built with **Spring Boot 3.5.x**, **Java 17**, **Spring Security + JWT**, **Spring Data JPA (MySQL)**, and **OpenFeign**.
+# 🗂️ Task Management System
 
-> Workspace project: `Taskmanagement/`
+A Task Management System for planning, tracking, and managing software projects. The platform enables teams to create projects, manage boards and sprints, track issues, assign tasks, link related work, and monitor workflows through a modern web interface.
 
-## What’s in this backend
+![Java](https://img.shields.io/badge/Java-17+-007396?style=for-the-badge&logo=java&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
+![React](https://img.shields.io/badge/React-18+-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![MySQL](https://img.shields.io/badge/MySQL-8+-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-Authentication-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
 
-- REST APIs under `/api/**`
-- Authentication & authorization using **JWT**
-- Persistence using **MySQL** via **Spring Data JPA**
-- Integrations via **Spring Cloud OpenFeign**
-- Optional integrations:
-  - Email via Spring Mail
-  - File/image hosting via Cloudinary
-  - PDF generation (iText)
+---
 
-## Tech stack
+## 📋 Table of Contents
+- Features  
+- Tech Stack  
+- Prerequisites  
+- Installation  
+- Configuration  
+- Running the Application  
+- Project Structure  
+- Usage Guide  
+- API Documentation
+- Screenshots  
+  
 
-- Java **17**
-- Spring Boot **3.5.6**
-- Spring Security
-- Spring Data JPA
-- MySQL connector
-- Spring Cloud OpenFeign (BOM `2024.0.0`)
-- JWT (jjwt 0.11.5)
+## ✨ Features
 
-## Project structure (high level)
+### 🔐 **Authentication & Authorization**
+- JWT-based secure authentication with refresh tokens
+- Role-based access control (Admin, Project Manager, Developer)
+- Password encryption using BCrypt
+- Session management
 
-- `src/main/java/com/TaskManagement/Controller` – REST controllers
-- `src/main/java/com/TaskManagement/Service` – business logic
-- `src/main/java/com/TaskManagement/Repository` – JPA repositories
-- `src/main/java/com/TaskManagement/Security` – JWT/security config
-- `src/main/resources/application.properties` – runtime configuration
-- `src/main/resources/application.properties.example` – template
+### 📊 **Project Management**
+- Create and manage multiple projects
+- Team member assignment and role management
+- Project-specific configurations
+- Progress tracking and metrics
 
-## Prerequisites
+### 🎯 **Task & Issue Tracking**
+- Create, update, and assign tasks and issues
+- Custom workflow status management
+- Priority levels (Critical, High, Medium, Low)
+- Task dependencies and linking
+- File attachments and comments
 
-- **Java 17** installed
-- **Maven** (or use the included Maven Wrapper `mvnw.cmd`)
-- **MySQL** running and accessible
+### 📈 **Workflow & Boards**
+- Customizable workflow states
+- Interactive Kanban boards
+- Drag-and-drop card management
+- Status transition tracking
 
-## Configuration
+### 🔔 **Collaboration Tools**
+- Real-time notifications
+- Team assignment and mentions
+- Activity tracking
+- Comment threads and discussions
 
-### 1) Create your local `application.properties`
+### 📱 **Dashboard & Analytics**
+- Interactive dashboards
+- Sprint progress tracking
+- Performance metrics
+- Visual data representation
 
-This repo contains an example file:
+---
 
-- `src/main/resources/application.properties.example`
+## 🛠️ Tech Stack
 
-Copy it to `application.properties` and edit values:
+### Backend
+- **Java 17+** - Core programming language
+- **Spring Boot 3.x** - Framework for Java applications
+- **Spring Security** - Authentication and authorization
+- **Spring Data JPA** - Database operations
+- **MySQL** - Relational database
+- **JWT** - JSON Web Token for authentication
+- **Maven** - Dependency management
 
-```bat
-copy src\main\resources\application.properties.example src\main\resources\application.properties
+### Frontend
+- **React 18+** - JavaScript library for UI
+- **Axios** - HTTP client for API calls
+- **React Router** - Navigation and routing
+- **Tailwind CSS** - Utility-first CSS framework
+
+### Tools & DevOps
+- **Postman** - API testing
+- **Git** - Version control
+- **Swagger/OpenAPI** - API documentation
+
+---
+
+## 📦 Prerequisites
+
+Before you begin, ensure you have the following installed on your system:
+
+### Required Software
+- **Java 17+** - [Download Java](https://www.oracle.com/java/technologies/downloads/)
+- **Node.js 18+** - [Download Node.js](https://nodejs.org/)
+- **MySQL 8+** - [Download MySQL](https://dev.mysql.com/downloads/)
+- **Git** - [Download Git](https://git-scm.com/)
+- **Maven 3.8+** - [Download Maven](https://maven.apache.org/download.cgi)
+
+### Check Your Installations
 ```
+# Check Java version
+java --version
 
-### 2) Required settings
+# Check Node.js version
+node --version
 
-At minimum you must set:
+# Check npm version
+npm --version
 
-- `spring.datasource.url`
-- `spring.datasource.username`
-- `spring.datasource.password`
-- `jwt.secret`
+# Check MySQL version
+mysql --version
 
-Example (do not use in production):
+# Check Maven version
+mvn --version
+```
+## 🚀 Installation
+### Step 1: Clone the Repository
+```git clone https://github.com/yourusername/task-management-system.git
+cd task-management-system
+```
+### Step 2: Backend Setup
+``` cd backend
+mvn clean install
+```
+### Step 3: Frontend Setup
+### 3.1 Navigate to Frontend Directory
+```
+cd frontend
+```
+### 3.2 Install Node Dependencies
+```
+npm install
+```
+### Step 4: MySQL Setup
+#### 4.1 Start MySQL Service
+```
+# Windows
+net start MySQL
 
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/taskmanagement
+# macOS
+brew services start mysql
+
+# Linux
+sudo systemctl start mysql
+```
+### 4.2 Verify MySQL is Running
+```
+mysql --version
+```
+## ⚙️ Configuration
+### Backend Configuration
+Create an application.properties file in:
+```
+cd backend/src/main/resources
+```
+Edit application.properties with the following content:
+
+```
+# MySQL Configuration
+spring.datasource.url=jdbc:mysql://localhost:3306/task_db
 spring.datasource.username=root
-spring.datasource.password=your_password
-server.port=8081
+spring.datasource.password=yourpassword
 
-jwt.secret=change_me_to_a_long_random_secret
+# JPA / Hibernate Configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+
+# JWT Configuration
+jwt.secret=your-super-secret-jwt-key
 jwt.expiration=86400000
 ```
+### Frontend Configuration
+Create a .env file in the frontend/ directory:
+```
+cd frontend
+```
+Create frontend/.env file with the following content:
+# API Base URL
+VITE_API_BASE_URL=http://localhost:8080
 
-### 3) Optional service-to-service URLs (Feign)
+## 🏃 Running the Application
+### Step 1: Start MySQL
 
-If your system has other services running:
+Make sure MySQL service is running (see MySQL Setup section)
+### Step 2: Start Backend Server
+```# Navigate to backend directory
+cd backend
 
-```properties
-issue.service.url=http://localhost:8082
-user.service.url=http://localhost:8083
+# Start Spring Boot application    
+mvn spring-boot: run
+Backend will be available at:
+http://localhost:8080
+```
+### Step 3: Start Frontend Development Server
+Open a new terminal and run:
+```
+# Navigate to frontend directory
+cd frontend
+
+# Start React development server
+npm start
+```
+Frontend will be available at:
+http://localhost:3000 
+
+## 📁 Project Structure
+```
+task-management-system/
+├── 📁 backend/
+│ ├── 📁 src/main/java/com/TaskManagement/
+│ │ ├── 📁 Client/ # 🚀 External Service Clients
+│ │ │ ├── IssueClient.java
+│ │ │ └── UserClient.java
+│ │ │
+│ │ ├── 📁 Config/ # ⚙️ Configuration Classes
+│ │ │
+│ │ ├── 📁 Controller/ # 🌐 REST API Controllers
+│ │ │ ├── AttachmentController.java # 📎 File Upload/Download
+│ │ │ ├── BackLogController.java # 📋 Backlog Management
+│ │ │ ├── BoardController.java # 🎯 Board Operations
+│ │ │ ├── BoardCardController.java # 🃏 Card Management
+│ │ │ ├── FileDownloadController.java # ⬇️ File Serving
+│ │ │ ├── IssueController.java # 🐛 Issue Handling
+│ │ │ ├── IssueLinkController.java # 🔗 Issue Linking
+│ │ │ ├── NotificationController.java # 🔔 Real-time Notifications
+│ │ │ ├── SprintController.java # 🏃 Sprint Planning
+│ │ │ ├── TaskController.java # ✅ Task Operations
+│ │ │ ├── UserAuthenticationController.java # 🔐 Auth Endpoints
+│ │ │ ├── UserController.java # 👤 User Management
+│ │ │ └── WorkFlowController.java # 📊 Workflow Configuration
+│ │ │
+│ │ ├── 📁 DTO/ # 📦 Data Transfer Objects
+│ │ │ ├── LoginRequestDTO.java # 👤 Login Request
+│ │ │ ├── RegisterRequestDTO.java # 📝 Registration Data
+│ │ │ ├── TaskDTO.java # ✅ Task Data Transfer
+│ │ │ ├── IssueDTO.java # 🐛 Issue Data Transfer
+│ │ │ └── WorkFlowDTO.java # 📊 Workflow Data
+│ │ │
+│ │ ├── 📁 Entity/ # 🗃️ Database Entities
+│ │ │ ├── User.java # 👤 User Entity
+│ │ │ ├── Task.java # ✅ Task Entity
+│ │ │ ├── Issue.java # 🐛 Issue Entity
+│ │ │ ├── Sprint.java # 🏃 Sprint Entity
+│ │ │ └── WorkFlow.java # 📊 Workflow Entity
+│ │ │
+│ │ ├── 📁 Enum/ # 📌 Enumeration Types
+│ │ │ ├── Role.java # 🎭 User Roles (ADMIN, USER)
+│ │ │ ├── TaskStatus.java # 📊 Task Statuses
+│ │ │ └── IssuePriority.java # ⚡ Priority Levels
+│ │ │
+│ │ ├── 📁 Repository/ # 💾 Data Access Layer
+│ │ │ ├── UserRepository.java # 👤 User Data Access
+│ │ │ ├── TaskRepository.java # ✅ Task Data Access
+│ │ │ ├── IssueRepository.java # 🐛 Issue Data Access
+│ │ │ └── SprintRepository.java # 🏃 Sprint Data Access
+│ │ │
+│ │ ├── 📁 Security/ # 🔒 Security Configuration
+│ │ │ ├── JwtAuthFilter.java # 🛡️ JWT Authentication Filter
+│ │ │ ├── JwtUtil.java # 🔑 JWT Utility Functions
+│ │ │ └── SecurityConfiguration.java # ⚙️ Security Config
+│ │ │
+│ │ ├── 📁 Service/ # 🧠 Business Logic Layer
+│ │ │ ├── UserService.java # 👤 User Operations
+│ │ │ ├── TaskService.java # ✅ Task Operations
+│ │ │ ├── IssueService.java # 🐛 Issue Operations
+│ │ │ └── WorkFlowService.java # 📊 Workflow Operations
+│ │ │
+│ │ └── TaskManagementApplication.java # 🚀 Main Application Class
+│ │
+│ ├── pom.xml # 📦 Maven Configuration
+│ └── README.md # 📖 Backend Documentation
+│
+├── 📁 frontend/
+│ ├── 📁 src/
+│ │ ├── 📁 api/ # 🔗 API Configuration
+│ │ │ └── axios.js # 🌐 HTTP Client Setup
+│ │ │
+│ │ ├── 📁 components/ # 🧩 Reusable UI Components
+│ │ │ ├── Navbar.jsx # 🧭 Navigation Bar
+│ │ │ ├── Sidebar.jsx # 📋 Side Navigation
+│ │ │ └── ProtectedRoute.jsx # 🔐 Route Protection
+│ │ │
+│ │ ├── 📁 pages/ # 🖥️ Application Pages
+│ │ │ ├── LoginPage.jsx # 🔑 Login Interface
+│ │ │ ├── RegisterPage.jsx # 📝 Registration Interface
+│ │ │ ├── Dashboard.jsx # 📊 Main Dashboard
+│ │ │ ├── BoardsPage.jsx # 🎯 Kanban Boards
+│ │ │ └── SprintPage.jsx # 🏃 Sprint Planning
+│ │ │
+│ │ ├── App.jsx # ⚛️ Main Application Component
+│ │ └── index.js # 🎬 Application Entry Point
+│ │
+│ ├── package.json # 📦 Frontend Dependencies
+│ ├── vite.config.js # ⚡ Build Configuration
+│ └── tailwind.config.js # 🎨 CSS Framework Config
+│
+├── README.md # 📖 Main Documentation
+└── .gitignore # 🙈 Git Ignore Rules
 ```
 
-### 4) Cloudinary (optional)
+## 📖 Usage Guide
+### 1. Register & Login
 
-```properties
-cloudinary.cloud_name=
-cloudinary.api_key=
-cloudinary.api_secret=
-```
+ - Open the application
+ - Click Register to create an account
+ - Login using your credentials
+### 2. Create a Project
 
-### 5) Email (optional)
+ - Navigate to Dashboard
+ - Click Create Project
+ - Enter project name and description
+ - Select the project to activate it
+### 3. Create Board / Sprint
+ - selected project
+ - Click Create Board or Create Sprint
+ - Configure sprint name and duration
+### 4. Add Tasks / Issues
+ - Click Add Task / Issue
+ - Enter title, description, priority, and due date
+ - Save the task
+### 5. Assign Tasks
+ - Select a task
+ - Choose an assignee from the team members
+ - Update task details
+### 6. Update Task Status
+ - Change status (To Do → In Progress → Done)
+ - Drag and drop tasks on the board (if enabled)
+### 7. Track Progress
+ - View project dashboard
+ - Monitor task status, priorities, and completion
+### 8. Search & Filter Tasks
+ - Use the search bar
+ - Filter by status, priority, or assignee
+   Got it 👍 — you want **API Documentation for your Task Management System**, similar to the format you shared.
 
-Uncomment & configure in `application.properties`:
+Here is your **Authentication + Project + Task + Board + Sprint APIs** in the same style:
 
-```properties
-spring.mail.host=smtp.gmail.com
-spring.mail.port=587
-spring.mail.username=your-email@gmail.com
-spring.mail.password=your-app-password
-spring.mail.properties.mail.smtp.auth=true
-spring.mail.properties.mail.smtp.starttls.enable=true
-```
+---
 
-## Run the backend (Windows / cmd)
+## 📚 API Documentation
 
-From the project folder `Taskmanagement`:
+#### Authentication
 
-### Option A: Maven Wrapper (recommended)
+* `POST /auth/register` – Register new user
+* `POST /auth/login` – User login
+* `POST /auth/forgot-password` – Request password reset
 
-```bat
-mvnw.cmd clean spring-boot:run
-```
+#### Users
 
-### Option B: Installed Maven
+* `GET /users` – List all users
+* `GET /users/{id}` – Get user by ID
+* `PUT /users/{id}` – Update user profile
+* `DELETE /users/{id}` – Delete user
 
-```bat
-mvn clean spring-boot:run
-```
+#### Projects
 
-The app runs on:
+* `GET /projects` – List all projects
+* `POST /projects` – Create new project
+* `GET /projects/{id}` – Get project details
+* `PUT /projects/{id}` – Update project
+* `DELETE /projects/{id}` – Delete project
 
-- `http://localhost:8081` (as configured by `server.port`)
+#### Boards
 
-## Build
+* `GET /boards` – List all boards
+* `POST /boards` – Create board
+* `GET /boards/{id}` – Get board details
 
-```bat
-mvnw.cmd clean package
-```
+#### Sprints
 
-## Test
+* `GET /sprints` – List all sprints
+* `POST /sprints` – Create a sprint
+* `GET /sprints/{id}` – Get sprint details
 
-```bat
-mvnw.cmd test
-```
+#### Tasks
 
-## API quick check
+* `GET /tasks` – List all tasks
+* `POST /tasks` – Create task
+* `GET /tasks/{id}` – Get task by ID
+* `PUT /tasks/{id}` – Update task
+* `DELETE /tasks/{id}` – Delete task
 
-A simple health-ish endpoint exists:
+#### Issue Linking
 
-- `GET /api/userAuthentication/welcome`
+* `POST /issues/link` – Link two issues
+* `GET /issues/links/{id}` – Get linked issues
 
-Authentication endpoints:
+---
 
-- `POST /api/userAuthentication/register`
-- `POST /api/userAuthentication/login`
+You can paste this directly under your **📚 API Documentation** section in README.md.
 
-> Additional endpoints are available under controllers in `src/main/java/com/TaskManagement/Controller`.
+If you want, I can also add **Request/Response examples** for each API to make your README even more professional.
 
-## Notes / Security
+## 🖼️ Application Screenshots
 
-- Don’t commit real secrets (DB password, JWT secret, Cloudinary keys).
-- Prefer environment variables or a `application-local.properties` that’s ignored by Git.
+<div align="center">
 
-## Troubleshooting
+### 🔐 Authentication
+| Login Page | Registration |
+|:---:|:---:|
+| <img width="600" alt="Login" src="https://github.com/user-attachments/assets/4252078d-b651-41b8-b053-b59740a0a8fa" /> | <img width="600" alt="Registration" src="https://github.com/user-attachments/assets/5ac59e4c-3850-4e06-b44b-96fea7386086" /> |
+| *Secure JWT-based login interface* | *User registration with role selection* |
 
-- **Port already in use**: change `server.port` in `application.properties`.
-- **DB connection errors**: confirm MySQL is running and the database exists, and credentials are correct.
-- **401/403 errors**: ensure you’re sending the JWT token in the `Authorization: Bearer <token>` header for secured endpoints.
+### 📊 Dashboard & Overview
+<img width="800" alt="Dashboard" src="https://github.com/user-attachments/assets/0a8e0784-90a1-42ea-ae2c-f56b3bc10498" />
+<p><em>Main dashboard showing project statistics, recent activity, and team overview</em></p>
+
+### 🎯 Task Management
+| Kanban Board | Task Details |
+|:---:|:---:|
+| <img width="400" alt="Board View" src="https://github.com/user-attachments/assets/53ae68e5-b818-4ac0-a351-f120fd1629fc" /> | <img width="400" alt="Task Creation" src="https://github.com/user-attachments/assets/d6fa6361-4b57-4789-87b8-5b0f8ebe6def" /> |
+| *Interactive Kanban board with drag-and-drop* | *Task creation and assignment interface* |
+
+### 📋 Backlog Management
+| Backlog View | Sprint Planning |
+|:---:|:---:|
+| <img width="400" alt="Backlog" src="https://github.com/user-attachments/assets/d1a8c788-762a-45f9-a869-6184873980e8" /> | <img width="400" alt="Sprint Backlog" src="https://github.com/user-attachments/assets/62f27586-356b-49c7-822b-b928df6b090f" /> |
+| *Product backlog with prioritization* | *Sprint backlog and capacity planning* |
+
+### 🏃 Sprint Management
+<img width="800" alt="Active Sprint" src="https://github.com/user-attachments/assets/a64f47b3-e40c-435f-bc37-ed0835b3e725" />
+<p><em>Active sprint tracking with progress visualization</em></p>
+
+### 🔔 Notifications
+<img width="800" alt="Notifications Panel" src="https://github.com/user-attachments/assets/31969e78-f1f8-480a-bd0a-c0962874e307" />
+<p><em>Real-time notification center with activity feed</em></p>
+
+### 📈 Workflow Management
+<img width="800" alt="Workflow Configuration" src="https://github.com/user-attachments/assets/06c1f298-92b0-413d-834b-66cc51802344" />
+<p><em>Custom workflow configuration and status management</em></p>
+
+### 🔗 Integration Dashboard
+<img width="800" alt="Integration Dashboard" src="https://github.com/user-attachments/assets/9d13d440-1728-475a-82e0-e4618885f57c" />
+<p><em>Third-party integrations and API configuration</em></p>
+
+### 👤 User Profile
+<img width="800" alt="User Profile" src="https://github.com/user-attachments/assets/ab5b2e61-5265-4154-b72a-008eb1d54844" />
+<p><em>User profile management and settings</em></p>
+
+</div>
+
+---
+
+### 📱 **Key Features Showcased:**
+
+1. **🔐 Authentication** - Secure login and registration
+2. **📊 Dashboard** - Project overview with metrics
+3. **🎯 Kanban Board** - Visual task management
+4. **📋 Backlog** - Prioritization and planning
+5. **🏃 Sprints** - Agile sprint management
+6. **🔔 Notifications** - Real-time updates
+7. **📈 Workflows** - Custom status configurations
+8. **🔗 Integrations** - Third-party connections
+9. **👤 Profiles** - User management
+
+> 💡 *All screenshots show the actual working interface of the Task Management System with real data and interactions.*
+>
+> Made with ❤️ by Ranjan  
+⭐ If this project will help you, give a star to this repo
