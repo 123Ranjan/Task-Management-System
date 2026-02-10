@@ -85,7 +85,7 @@ A Task Management System for planning, tracking, and managing software projects.
 ### Tools & DevOps
 - **Postman** - API testing
 - **Git** - Version control
-- **Swagger/OpenAPI** - API documentation
+
 
 ---
 
@@ -462,3 +462,4 @@ If you want, I can also add **Request/Response examples** for each API to make y
 >
 > Made with ❤️ by Ranjan  
 ⭐ If this project will help you, give a star to this repo
+
