@@ -1,0 +1,97 @@
+# ========================
+# COMPILED OUTPUT / BUILD
+# ========================
+/target/
+**/target/
+*.class
+*.jar
+*.war
+*.ear
+
+# ========================
+# MAVEN WRAPPER (OPTIONAL - CAN BE PUSHED)
+# ========================
+# The .mvn/wrapper folder is typically pushed to GitHub
+# so developers can build without installing Maven globally.
+# Uncomment the following line if you DON'T want to push it:
+# .mvn/wrapper/maven-wrapper.jar
+
+# ========================
+# ECLIPSE IDE
+# ========================
+.classpath
+.project
+.settings/
+.factorypath
+.springBeans
+.apt_generated/
+.apt_generated_tests/
+
+# ========================
+# INTELLIJ IDEA IDE
+# ========================
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ========================
+# VS CODE
+# ========================
+.vscode/
+
+# ========================
+# OPERATING SYSTEM FILES
+# ========================
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+
+# ========================
+# LOG FILES
+# ========================
+*.log
+logs/
+*.pid
+*.pid.lock
+
+# ========================
+# SENSITIVE CONFIG FILES (CONTAINS SECRETS)
+# ========================
+# application.properties contains DB credentials, JWT secret, cloudinary keys, etc.
+/src/main/resources/application.properties
+
+# Environment variable files
+.env
+.env.local
+.env.*.local
+*.env
+
+# ========================
+# TEST / COVERAGE OUTPUT
+# ========================
+/coverage/
+/.nyc_output/
+/test-output/
+*.exec
+
+# ========================
+# SPRING BOOT SPECIFIC
+# ========================
+# Spring Boot dev tools
+spring-boot-devtools.properties
+
+# ========================
+# MISC
+# ========================
+# Node modules (if using frontend)
+node_modules/
+
+# Temp files
+*.tmp
+*.temp
+*.bak
